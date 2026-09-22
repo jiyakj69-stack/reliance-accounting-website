@@ -1,0 +1,987 @@
+<style>
+@import url("https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,500&family=Inter:wght@400;500;600;700;800&family=IBM+Plex+Mono:wght@500&display=swap");
+
+:root{
+  --navy:#0E1D30;
+  --navy-2:#152A44;
+  --paper:#F6F3EA;
+  --card:#FFFFFF;
+  --gold:#AD7A32;
+  --gold-2:#C99A52;
+  --teal:#2E5C50;
+  --teal-2:#3F7A6B;
+  --rose:#8C3B34;
+  --ink:#1A2231;
+  --muted:#5C6472;
+  --line:#DEDACB;
+  --line-2:#2A3E58;
+  font-family:'Inter',system-ui,sans-serif;
+  box-sizing:border-box;
+  padding-top:env(safe-area-inset-top,0px);
+  padding-bottom:env(safe-area-inset-bottom,0px);
+}
+*{box-sizing:inherit;}
+html{scroll-behavior:smooth;scroll-padding-top:78px;}
+html,body{height:auto;margin:0;background:var(--paper);color:var(--ink);}
+body{-webkit-font-smoothing:antialiased;overflow-x:hidden;}
+img{max-width:100%;}
+h1,h2,h3,h4{font-family:'Fraunces',serif;font-weight:600;line-height:1.12;margin:0;color:var(--navy);}
+p{line-height:1.65;color:var(--ink);margin:0 0 1em;}
+.container{max-width:1140px;margin:0 auto;padding:0 28px;}
+a{color:inherit;}
+.eyebrow{font-size:13px;letter-spacing:.02em;color:var(--gold);font-weight:600;margin-bottom:10px;display:block;}
+.tag{display:inline-block;font-size:12px;font-weight:600;color:var(--teal);background:#EAF1ED;border:1px solid #CBDED4;border-radius:20px;padding:3px 11px;margin:0 6px 6px 0;}
+.mono{font-family:'IBM Plex Mono',monospace;}
+
+/* ---------- NAV ---------- */
+#topnav{position:sticky;top:0;z-index:50;background:rgba(14,29,48,.96);backdrop-filter:blur(6px);border-bottom:1px solid var(--line-2);padding-top:env(safe-area-inset-top,0px);}
+.navwrap{max-width:1140px;margin:0 auto;padding:0 28px;display:flex;align-items:center;justify-content:space-between;height:64px;}
+.brand{color:#F4EFE2;font-family:'Fraunces',serif;font-weight:600;font-size:18px;display:flex;align-items:center;gap:9px;white-space:nowrap;}
+.brand .dot{width:9px;height:9px;border-radius:50%;background:var(--gold-2);}
+#navlinks{display:flex;gap:2px;list-style:none;margin:0;padding:0;flex-wrap:nowrap;overflow-x:auto;}
+#navlinks a{display:block;color:#C7CEDB;text-decoration:none;font-size:13.5px;font-weight:500;padding:9px 12px;border-radius:6px;white-space:nowrap;transition:color .15s,background .15s;}
+#navlinks a:hover{color:#fff;background:rgba(255,255,255,.07);}
+.navtoggle{display:none;background:none;border:none;color:#fff;font-size:22px;cursor:pointer;padding:4px 8px;}
+@media(max-width:900px){
+  #navlinks{position:fixed;top:64px;left:0;right:0;bottom:0;background:var(--navy);flex-direction:column;padding:18px 22px;overflow-y:auto;display:none;}
+  #navlinks.open{display:flex;}
+  #navlinks a{font-size:16px;padding:13px 6px;border-bottom:1px solid rgba(255,255,255,.08);}
+  .navtoggle{display:block;}
+}
+
+/* ---------- HERO ---------- */
+.hero{background:radial-gradient(ellipse at 78% -10%, #1D3B5C 0%, var(--navy) 55%);color:#EFE9DA;padding:76px 0 64px;position:relative;overflow:hidden;}
+.hero::after{content:"";position:absolute;right:-120px;bottom:-140px;width:420px;height:420px;border-radius:50%;border:1px solid rgba(201,154,82,.18);}
+.hero-grid{display:grid;grid-template-columns:1.25fr 1fr;gap:52px;align-items:center;position:relative;}
+@media(max-width:900px){.hero-grid{grid-template-columns:1fr;gap:36px;}}
+.hero h1{font-size:clamp(32px,4.4vw,52px);color:#FBF7EC;max-width:11.5ch;}
+.hero .lede{color:#B9C2D2;font-size:17px;max-width:52ch;margin-top:18px;}
+.hero-stats{display:flex;gap:26px;flex-wrap:wrap;margin-top:30px;}
+.hstat b{display:block;font-family:'Fraunces',serif;font-size:26px;color:var(--gold-2);}
+.hstat span{font-size:12.5px;color:#93A0B5;}
+.hero-cta{margin-top:32px;display:flex;gap:14px;flex-wrap:wrap;}
+.btn{display:inline-flex;align-items:center;gap:8px;padding:12px 22px;border-radius:7px;font-weight:600;font-size:14.5px;text-decoration:none;border:1px solid transparent;cursor:pointer;transition:transform .15s,box-shadow .15s;}
+.btn:active{transform:translateY(1px);}
+.btn-gold{background:var(--gold-2);color:#20140A;}
+.btn-gold:hover{box-shadow:0 8px 22px -8px rgba(201,154,82,.7);}
+.btn-ghost{border-color:rgba(239,233,218,.35);color:#EFE9DA;}
+.btn-ghost:hover{background:rgba(239,233,218,.08);}
+
+/* ownership preview graphic in hero */
+.tree-card{background:rgba(21,42,68,.65);border:1px solid rgba(255,255,255,.1);border-radius:14px;padding:22px;}
+.tree-card .cap{font-size:11.5px;color:#8FA0B8;margin-bottom:14px;letter-spacing:.02em;}
+.tnode{border-radius:8px;padding:10px 13px;font-size:13px;font-weight:600;text-align:center;margin:0 auto;}
+.tnode.parent{background:#2A3E58;color:#F4EFE2;width:78%;}
+.tconn{width:1px;height:20px;background:rgba(255,255,255,.25);margin:0 auto;}
+.tsplit{display:flex;justify-content:center;gap:26px;position:relative;margin-top:2px;}
+.tnode.mid{background:rgba(201,154,82,.16);border:1px solid rgba(201,154,82,.4);color:#F0DDB6;width:150px;font-size:12.5px;}
+.tnode.leaf{background:rgba(63,122,107,.2);border:1px solid rgba(63,122,107,.5);color:#CFE7DD;width:150px;font-size:12px;margin-top:20px;}
+.tbranch{display:flex;flex-direction:column;align-items:center;}
+
+/* ---------- SECTION shells ---------- */
+section{padding:64px 0;}
+section.alt{background:var(--card);border-top:1px solid var(--line);border-bottom:1px solid var(--line);}
+.sec-head{max-width:640px;margin-bottom:38px;}
+.sec-head h2{font-size:clamp(24px,3vw,34px);}
+.sec-head p{color:var(--muted);margin-top:10px;font-size:15.5px;}
+
+/* cards grid for home */
+.cardgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;}
+@media(max-width:860px){.cardgrid{grid-template-columns:repeat(2,1fr);}}
+@media(max-width:560px){.cardgrid{grid-template-columns:1fr;}}
+.navcard{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:22px 20px;text-decoration:none;display:block;transition:border-color .15s,transform .15s;}
+.navcard:hover{border-color:var(--gold);transform:translateY(-2px);}
+.navcard .num{font-family:'IBM Plex Mono',monospace;font-size:12px;color:var(--gold);}
+.navcard h3{font-size:18px;margin-top:8px;}
+.navcard p{color:var(--muted);font-size:13.5px;margin-top:8px;margin-bottom:0;}
+
+/* ---------- accordion ---------- */
+.accordion{border-top:1px solid var(--line);}
+.acc-item{border-bottom:1px solid var(--line);}
+.acc-head{width:100%;text-align:left;background:none;border:none;padding:18px 4px;display:flex;justify-content:space-between;align-items:center;cursor:pointer;font-family:'Fraunces',serif;font-size:17px;color:var(--navy);gap:16px;}
+.acc-head .plus{font-size:20px;color:var(--gold);transition:transform .2s;flex-shrink:0;}
+.acc-item.open .plus{transform:rotate(45deg);}
+.acc-body{max-height:0;overflow:hidden;transition:max-height .25s ease;}
+.acc-body-inner{padding:0 4px 20px;color:var(--muted);font-size:15px;}
+.acc-body-inner p{color:var(--ink);}
+.acc-body-inner ul{margin:0 0 12px;padding-left:20px;}
+.acc-body-inner li{margin-bottom:6px;line-height:1.55;}
+
+/* formula box */
+.formula{background:var(--navy);color:#F4EFE2;border-radius:10px;padding:18px 22px;font-family:'IBM Plex Mono',monospace;font-size:14.5px;margin:14px 0;letter-spacing:.01em;overflow-x:auto;}
+.formula .op{color:var(--gold-2);}
+
+/* control triangle */
+.control3{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin:20px 0;}
+@media(max-width:700px){.control3{grid-template-columns:1fr;}}
+.c3card{background:var(--paper);border:1px solid var(--line);border-radius:10px;padding:16px;}
+.c3card b{display:block;color:var(--teal);font-size:14px;margin-bottom:6px;}
+.c3card span{font-size:13.5px;color:var(--muted);}
+
+/* ---------- table wrap ---------- */
+.tblwrap{overflow-x:auto;border:1px solid var(--line);border-radius:10px;background:var(--card);}
+table{border-collapse:collapse;width:100%;min-width:520px;font-size:14px;}
+th,td{padding:10px 14px;text-align:right;border-bottom:1px solid var(--line);white-space:nowrap;}
+th:first-child,td:first-child{text-align:left;white-space:normal;min-width:220px;}
+thead th{background:var(--navy);color:#EFE9DA;font-weight:600;font-size:12.5px;position:sticky;top:0;}
+tbody tr:hover{background:#FBF8F0;}
+tr.total td{font-weight:700;background:#F3EEDE;}
+tr.neg td{color:var(--rose);}
+.small-note{font-size:12.5px;color:var(--muted);margin-top:8px;}
+
+/* tabs */
+.tabbar{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:16px;}
+.tabbtn{background:var(--card);border:1px solid var(--line);padding:8px 16px;border-radius:20px;font-size:13.5px;font-weight:600;color:var(--muted);cursor:pointer;}
+.tabbtn.active{background:var(--navy);color:#F4EFE2;border-color:var(--navy);}
+.tabpanel{display:none;}
+.tabpanel.active{display:block;}
+
+/* subsidiary table */
+.subtable td, .subtable th{font-size:13.5px;}
+
+/* company card */
+.twocol{display:grid;grid-template-columns:1.1fr .9fr;gap:36px;align-items:start;}
+@media(max-width:860px){.twocol{grid-template-columns:1fr;}}
+.statbox{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:8px;}
+.stat{background:var(--paper);border:1px solid var(--line);border-radius:10px;padding:16px;}
+.stat b{display:block;font-family:'Fraunces',serif;font-size:22px;color:var(--navy);}
+.stat span{font-size:12px;color:var(--muted);}
+
+/* ownership diagram full */
+.org{display:flex;flex-direction:column;align-items:center;gap:0;margin:30px 0 10px;}
+.org .box{border-radius:9px;padding:12px 18px;font-size:13.5px;font-weight:600;text-align:center;}
+.org .lvl1{background:var(--navy);color:#F4EFE2;min-width:220px;}
+.org .lvl2{background:#EFE4CE;border:1px solid var(--gold);color:#5C3E14;min-width:210px;}
+.org .lvl3{background:#E3EFEA;border:1px solid var(--teal-2);color:#1F4438;min-width:200px;font-size:12.5px;}
+.org .line{width:1px;background:var(--line-2);height:24px;}
+.org .row{display:flex;gap:40px;justify-content:center;flex-wrap:wrap;position:relative;}
+.org .pct{font-size:11px;color:var(--gold);font-weight:700;margin-top:4px;}
+.org .branch{display:flex;flex-direction:column;align-items:center;}
+.org .hline{height:1px;background:var(--line-2);width:100%;max-width:520px;margin:0 auto;}
+
+/* simulator */
+.sim{background:var(--navy);border-radius:16px;padding:32px;color:#EFE9DA;}
+.sim h3{color:#F4EFE2;font-size:22px;}
+.sim-grid{display:grid;grid-template-columns:1fr 1fr;gap:32px;margin-top:22px;align-items:center;}
+@media(max-width:800px){.sim-grid{grid-template-columns:1fr;}}
+.sim label{font-size:13px;color:#AEB9CC;display:block;margin-bottom:8px;}
+.sim-slider-row{display:flex;align-items:center;gap:14px;margin-bottom:22px;}
+input[type=range]{-webkit-appearance:none;flex:1;height:5px;border-radius:5px;background:#2A3E58;outline:none;}
+input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:18px;height:18px;border-radius:50%;background:var(--gold-2);cursor:pointer;border:3px solid var(--navy);}
+input[type=range]::-moz-range-thumb{width:18px;height:18px;border-radius:50%;background:var(--gold-2);cursor:pointer;border:3px solid var(--navy);}
+.sim-val{font-family:'IBM Plex Mono',monospace;font-weight:600;color:var(--gold-2);min-width:58px;text-align:right;font-size:15px;}
+.sim-out{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:6px;}
+.sim-out .o{background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);border-radius:9px;padding:13px 15px;}
+.sim-out .o b{display:block;font-family:'Fraunces',serif;font-size:19px;color:#FBF7EC;}
+.sim-out .o span{font-size:11.5px;color:#93A0B5;}
+.presets{display:flex;gap:8px;flex-wrap:wrap;margin-top:6px;}
+.preset{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.15);color:#DCE3EE;padding:6px 12px;border-radius:16px;font-size:12.5px;cursor:pointer;}
+.preset:hover{background:rgba(255,255,255,.14);}
+.chart-holder{background:rgba(255,255,255,.04);border-radius:10px;padding:16px;}
+
+/* findings/conclusion */
+.findgrid{display:grid;grid-template-columns:repeat(2,1fr);gap:16px;}
+@media(max-width:700px){.findgrid{grid-template-columns:1fr;}}
+.find{background:var(--card);border:1px solid var(--line);border-left:4px solid var(--gold);border-radius:6px;padding:18px 20px;}
+.find h4{font-size:15.5px;}
+.find p{font-size:14px;color:var(--muted);margin-top:6px;margin-bottom:0;}
+
+/* team */
+.teamgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;}
+@media(max-width:860px){.teamgrid{grid-template-columns:repeat(2,1fr);}}
+@media(max-width:560px){.teamgrid{grid-template-columns:1fr;}}
+.person{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:18px;}
+.person .initials{width:38px;height:38px;border-radius:50%;background:var(--navy);color:#F4EFE2;display:flex;align-items:center;justify-content:center;font-family:'Fraunces',serif;font-size:14px;margin-bottom:10px;}
+.person h4{font-size:15.5px;}
+.person p{font-size:13px;color:var(--muted);margin:5px 0 0;}
+
+/* references */
+.refs{list-style:none;padding:0;margin:0;}
+.refs li{padding:12px 0;border-bottom:1px solid var(--line);font-size:14px;color:var(--muted);}
+.refs li b{color:var(--ink);}
+
+/* back to top */
+#totop{position:fixed;right:20px;bottom:24px;width:44px;height:44px;border-radius:50%;background:var(--navy);color:#F4EFE2;border:none;font-size:18px;cursor:pointer;display:none;align-items:center;justify-content:center;box-shadow:0 6px 18px rgba(0,0,0,.25);z-index:40;padding-bottom:env(safe-area-inset-bottom,0px);}
+#totop.show{display:flex;}
+
+footer{background:var(--navy);color:#93A0B5;padding:46px 0 34px;padding-bottom:calc(34px + env(safe-area-inset-bottom,0px));}
+footer .fgrid{display:grid;grid-template-columns:1.4fr 1fr 1fr;gap:30px;}
+@media(max-width:700px){footer .fgrid{grid-template-columns:1fr;}}
+footer h5{color:#F4EFE2;font-family:'Fraunces',serif;font-size:15px;margin-bottom:12px;}
+footer a{color:#93A0B5;text-decoration:none;font-size:13.5px;display:block;margin-bottom:8px;}
+footer a:hover{color:#F4EFE2;}
+footer .bottom{border-top:1px solid rgba(255,255,255,.1);margin-top:30px;padding-top:20px;font-size:12.5px;display:flex;justify-content:space-between;flex-wrap:wrap;gap:10px;}
+
+.disclosure{background:#FBF3E3;border:1px solid #E8CE9A;border-radius:8px;padding:12px 16px;font-size:13px;color:#6B4E1B;margin:16px 0;}
+
+/* light/dark aware */
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --paper:#12161D;--card:#181D26;--ink:#E7E7E3;--muted:#9AA3AF;--line:#2A2F3A;--navy:#0E1D30;
+  }
+  :root:not([data-theme="light"]) h1,:root:not([data-theme="light"]) h2,:root:not([data-theme="light"]) h3,:root:not([data-theme="light"]) h4{color:#F4EFE2;}
+  :root:not([data-theme="light"]) tr.total td{background:#22283A;}
+  :root:not([data-theme="light"]) .c3card,:root:not([data-theme="light"]) .stat{background:#1D2330;}
+  :root:not([data-theme="light"]) .navcard:hover{background:#1D2330;}
+}
+:root[data-theme="dark"]{
+  --paper:#12161D;--card:#181D26;--ink:#E7E7E3;--muted:#9AA3AF;--line:#2A2F3A;--navy:#0E1D30;
+}
+</style>
+
+<nav id="topnav">
+  <div class="navwrap">
+    <div class="brand"><span class="dot"></span>RIL Group Structure</div>
+    <button class="navtoggle" id="navtoggle" aria-label="Menu">☰</button>
+    <ul id="navlinks">
+      <li><a href="#home" onclick="closeNav()">Home</a></li>
+      <li><a href="#overview" onclick="closeNav()">Company</a></li>
+      <li><a href="#concepts" onclick="closeNav()">Concepts</a></li>
+      <li><a href="#structure" onclick="closeNav()">Structure</a></li>
+      <li><a href="#seven-india" onclick="closeNav()">7‑India</a></li>
+      <li><a href="#consolidation" onclick="closeNav()">Consolidation</a></li>
+      <li><a href="#simulator" onclick="closeNav()">Simulator</a></li>
+      <li><a href="#findings" onclick="closeNav()">Findings</a></li>
+      <li><a href="#team" onclick="closeNav()">Team</a></li>
+    </ul>
+  </div>
+</nav>
+
+<!-- ============ HERO / HOME ============ -->
+<header class="hero" id="home">
+  <div class="container hero-grid">
+    <div>
+      <span class="eyebrow">Corporate Accounting — Group 06 Project</span>
+      <h1>One company, many entities: how Reliance is consolidated into a single economic story.</h1>
+      <p class="lede">An interactive study of Reliance Industries Limited as ultimate holding company — its control structure, its subsidiaries, and how Ind AS 110 turns dozens of separate legal entities, down to 7‑India Convenience Retail Limited, into one consolidated group.</p>
+      <div class="hero-stats">
+        <div class="hstat"><b>₹11,65,809 cr</b><span>RIL standalone total assets, FY 2025‑26</span></div>
+        <div class="hstat"><b>83.56%</b><span>RIL's stake in Reliance Retail Ventures</span></div>
+        <div class="hstat"><b>2 tiers</b><span>RIL → RRVL → 7‑India Convenience Retail</span></div>
+      </div>
+      <div class="hero-cta">
+        <a href="#structure" class="btn btn-gold">Explore the group structure ↓</a>
+        <a href="#seven-india" class="btn btn-ghost">Jump to RIL × 7‑India</a>
+      </div>
+    </div>
+    <div class="tree-card">
+      <div class="cap">SIMPLIFIED CONTROL CHAIN</div>
+      <div class="tnode parent">Reliance Industries Ltd.</div>
+      <div class="tconn"></div>
+      <div class="tsplit">
+        <div class="tbranch">
+          <div class="tnode mid">Reliance Retail Ventures Ltd.<br><span class="mono" style="font-weight:700;">83.56%</span></div>
+          <div class="tnode leaf">7‑India Convenience Retail Ltd.<br><span class="mono" style="font-weight:700;">100%</span></div>
+        </div>
+        <div class="tbranch">
+          <div class="tnode mid">Jio Platforms Ltd.</div>
+          <div class="tnode leaf">Reliance Jio Infocomm Ltd.<br><span class="mono" style="font-weight:700;">100%</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</header>
+
+<!-- ============ QUICK NAV CARDS ============ -->
+<section>
+  <div class="container">
+    <div class="sec-head">
+      <h2>What's inside this project</h2>
+      <p>Six sections, built from every group member's research, calculations and Google Sheet models.</p>
+    </div>
+    <div class="cardgrid">
+      <a class="navcard" href="#overview"><span class="num">01</span><h3>Company Overview</h3><p>RIL's business engines, FY 2024‑25 scale and why it works as a holding-company case study. — Dhanush</p></a>
+      <a class="navcard" href="#concepts"><span class="num">02</span><h3>Accounting Concepts</h3><p>Holding vs. subsidiary, control under Ind AS 110, NCI, and consolidated vs. standalone statements. — Sudarshana</p></a>
+      <a class="navcard" href="#structure"><span class="num">03</span><h3>Group Structure</h3><p>The ownership chain from RIL down to its major operating subsidiaries. — Dhanush &amp; Roohani</p></a>
+      <a class="navcard" href="#seven-india"><span class="num">04</span><h3>RIL × 7‑India Retail</h3><p>The real financial statements of both companies, and how a second‑tier subsidiary consolidates. — Jiya</p></a>
+      <a class="navcard" href="#consolidation"><span class="num">05</span><h3>Consolidation Workings</h3><p>Investment, NCI, goodwill/capital reserve and intra‑group adjustments, worked from RIL's disclosures. — Goutham</p></a>
+      <a class="navcard" href="#simulator"><span class="num">06</span><h3>Interactive NCI Simulator</h3><p>Change the ownership assumption and watch NCI and owners' profit recalculate live. — Keshav</p></a>
+    </div>
+  </div>
+</section>
+
+<!-- ============ COMPANY OVERVIEW ============ -->
+<section class="alt" id="overview">
+  <div class="container">
+    <div class="sec-head">
+      <span class="eyebrow">01 — Company Research</span>
+      <h2>Reliance Industries Limited</h2>
+      <p>India's largest diversified business group, run not as one company but as a network of subsidiaries, intermediate holding companies, associates and joint ventures.</p>
+    </div>
+    <div class="twocol">
+      <div>
+        <p>Reliance's traditional strength in energy and petrochemicals has broadened into five major engines: <b>Oil‑to‑Chemicals, Oil &amp; Gas, Digital Services, Retail, and Media &amp; Entertainment.</b> The digital business is organised under <b>Jio Platforms Limited</b>, and the retail business under <b>Reliance Retail Ventures Limited (RRVL)</b> — each acting as an intermediate holding layer in its own right, rather than RIL owning every operating company directly.</p>
+        <p>For this project, RIL is treated as the <b>parent / ultimate holding company</b> of the group. The annual report separately identifies subsidiaries, associates and joint ventures, and control can run directly from RIL or through an intermediate holding company such as RRVL or Jio Platforms — which is exactly the layered structure this project uses to explain multi‑tier consolidation.</p>
+        <div class="tag">Ind AS 110</div><div class="tag">Consolidated Financial Statements</div><div class="tag">Non‑Controlling Interest</div><div class="tag">Multi‑tier holding structure</div>
+      </div>
+      <div class="statbox">
+        <div class="stat"><b>₹10,71,174 cr</b><span>Consolidated revenue, FY 2024‑25</span></div>
+        <div class="stat"><b>₹81,309 cr</b><span>PAT attributable to owners, FY 2024‑25 (Board's Report)</span></div>
+        <div class="stat"><b>₹11,65,809 cr</b><span>RIL standalone total assets, 31 Mar 2026</span></div>
+        <div class="stat"><b>₹43,851 cr</b><span>RIL standalone profit for the year, FY 2025‑26</span></div>
+      </div>
+    </div>
+    <div class="disclosure">Two different profit figures for RIL appear in this project because they measure different things: <b>₹81,309 cr</b> is <i>consolidated</i> profit attributable to owners for FY 2024‑25 (Board's Report), while <b>₹43,851 cr</b> is RIL's own <i>standalone</i> profit for FY 2025‑26, before the results of subsidiaries are added in. The distinction between standalone and consolidated figures is explained in Section 02.</div>
+  </div>
+</section>
+
+<!-- ============ ACCOUNTING CONCEPTS ============ -->
+<section id="concepts">
+  <div class="container">
+    <div class="sec-head">
+      <span class="eyebrow">02 — Accounting Concepts</span>
+      <h2>Holding &amp; subsidiary companies, under Ind AS 110</h2>
+      <p>The accounting foundation the rest of the project rests on: what makes one company a "holding company" over another, and when their statements must be combined.</p>
+    </div>
+
+    <h3 style="font-size:18px;margin-bottom:10px;">Control has three parts</h3>
+    <p>Ind AS 110 does not ask "how many shares?" first — it asks whether all three of these exist together:</p>
+    <div class="control3">
+      <div class="c3card"><b>Power</b><span>The ability to direct the investee's relevant activities — the decisions that most affect its returns.</span></div>
+      <div class="c3card"><b>Exposure to variable returns</b><span>Returns from the investee that can rise or fall based on its performance — dividends, fees, residual value.</span></div>
+      <div class="c3card"><b>Ability to use power to affect returns</b><span>The link between the two: using that power actually changes the size of the returns received.</span></div>
+    </div>
+    <div class="formula">Control <span class="op">=</span> Power <span class="op">+</span> Exposure to Variable Returns <span class="op">+</span> Ability to Use Power to Affect Returns</div>
+
+    <div class="accordion" id="accordion">
+      <div class="acc-item">
+        <button class="acc-head"><span>Holding company &amp; subsidiary — definitions</span><span class="plus">+</span></button>
+        <div class="acc-body"><div class="acc-body-inner">
+          <p>A <b>holding (parent) company</b> is a company that controls one or more other companies. The companies it controls are its <b>subsidiaries</b>. Control may arise through voting rights, contractual arrangements, or other rights that let the parent direct the subsidiary's relevant activities — not only through owning more than 50% of the shares.</p>
+          <p>A company is <i>not</i> automatically a subsidiary just because another company has invested in it. The test under Ind AS 110 is control, not the size of the shareholding alone.</p>
+        </div></div>
+      </div>
+      <div class="acc-item">
+        <button class="acc-head"><span>Ownership vs. control</span><span class="plus">+</span></button>
+        <div class="acc-body"><div class="acc-body-inner">
+          <p><b>Ownership</b> is the percentage of shares or voting rights held. <b>Control</b> is the ability to direct an investee's relevant activities and to influence the returns it receives. In practice the two usually move together, but a company can control another with less than 50% ownership (e.g. through board appointment rights), or hold a large stake without control (e.g. a passive financial investor).</p>
+        </div></div>
+      </div>
+      <div class="acc-item">
+        <button class="acc-head"><span>Ind AS 110 — Consolidated Financial Statements</span><span class="plus">+</span></button>
+        <div class="acc-body"><div class="acc-body-inner">
+          <p>Ind AS 110 sets out the principles for preparing consolidated financial statements whenever an entity controls one or more other entities. Its core idea: a parent and its subsidiaries are presented as <b>one single economic entity</b>, even though each remains a separate legal company.</p>
+        </div></div>
+      </div>
+      <div class="acc-item">
+        <button class="acc-head"><span>The consolidation process</span><span class="plus">+</span></button>
+        <div class="acc-body"><div class="acc-body-inner">
+          <ul>
+            <li>Combine the assets, liabilities, income and expenses of the parent and subsidiary, line by line.</li>
+            <li>Eliminate intra‑group balances and transactions (e.g. intercompany receivables/payables, unrealised profit on intra‑group sales).</li>
+            <li>Identify and present the Non‑Controlling Interest (NCI), where the parent owns less than 100%.</li>
+            <li>Apply consistent accounting policies across the group for similar transactions.</li>
+          </ul>
+        </div></div>
+      </div>
+      <div class="acc-item">
+        <button class="acc-head"><span>Non‑Controlling Interest (NCI)</span><span class="plus">+</span></button>
+        <div class="acc-body"><div class="acc-body-inner">
+          <p>NCI is the portion of a subsidiary's equity that is <i>not</i> attributable to the parent. If a parent owns 80% of a subsidiary, the remaining 20% held by other shareholders is the NCI — shown separately within consolidated equity, not netted off.</p>
+          <p>RIL's own consolidated accounts illustrate this directly: <b>RIL owns 83.56%</b> of Reliance Retail Ventures Limited, so the remaining <b>16.44%</b> held by outside investors becomes NCI on consolidation — used throughout Section 05 and the simulator in Section 06.</p>
+        </div></div>
+      </div>
+      <div class="acc-item">
+        <button class="acc-head"><span>Standalone vs. consolidated financial statements</span><span class="plus">+</span></button>
+        <div class="acc-body"><div class="acc-body-inner">
+          <div class="tblwrap"><table style="min-width:0;">
+            <thead><tr><th>Standalone financial statements</th><th style="text-align:left;">Consolidated financial statements</th></tr></thead>
+            <tbody>
+              <tr><td style="text-align:left;">Show the financial position and performance of one individual company (e.g. RIL alone, or 7‑India alone).</td><td style="text-align:left;">Present the parent and its controlled subsidiaries together as one economic entity.</td></tr>
+              <tr><td style="text-align:left;">Focus on that company's own operations only.</td><td style="text-align:left;">Give a group‑level view of financial performance and position.</td></tr>
+              <tr><td style="text-align:left;">Subsidiaries are not combined line‑by‑line; investments in them appear at cost.</td><td style="text-align:left;">Subsidiaries are consolidated line‑by‑line whenever control exists.</td></tr>
+            </tbody>
+          </table></div>
+          <p class="small-note">This is exactly why the RIL figures in this project appear twice with different numbers — see the note in Section 01 and the worked example in Section 04.</p>
+        </div></div>
+      </div>
+      <div class="acc-item">
+        <button class="acc-head"><span>The key principle, in one line</span><span class="plus">+</span></button>
+        <div class="acc-body"><div class="acc-body-inner">
+          <div class="formula">Control <span class="op">→</span> Subsidiary <span class="op">→</span> Consolidation</div>
+          <p>If Company A controls Company B, A is the parent/holding company and B is the subsidiary; both are consolidated into a single set of group financial statements, subject to Ind AS 110.</p>
+        </div></div>
+      </div>
+    </div>
+    <p class="small-note" style="margin-top:16px;">Sources: Ministry of Corporate Affairs (MCA) — Ind AS 110, Consolidated Financial Statements; ICAI — Educational Material on Ind AS 110.</p>
+  </div>
+</section>
+
+<!-- ============ GROUP STRUCTURE ============ -->
+<section class="alt" id="structure">
+  <div class="container">
+    <div class="sec-head">
+      <span class="eyebrow">03 — Group Structure</span>
+      <h2>Who owns whom, and on what basis</h2>
+      <p>RIL's "holding company" role does not mean it owns every operating business directly. Jio Platforms and Reliance Retail Ventures act as intermediate holding layers, so the group has more than one level of ownership.</p>
+    </div>
+
+    <div class="org">
+      <div class="box lvl1">Reliance Industries Limited<br><span style="font-weight:400;font-size:11.5px;">Ultimate parent / holding company</span></div>
+      <div class="line"></div>
+      <div class="hline"></div>
+      <div class="row" style="margin-top:0;">
+        <div class="branch">
+          <div class="line"></div>
+          <div class="box lvl2">Reliance Retail Ventures Ltd.<div class="pct">RIL holds 83.56%</div></div>
+          <div class="line"></div>
+          <div class="box lvl3">Reliance Retail Limited</div>
+        </div>
+        <div class="branch">
+          <div class="line"></div>
+          <div class="box lvl2">Jio Platforms Limited<div class="pct">RIL‑controlled; outside strategic investors also hold stakes</div></div>
+          <div class="line"></div>
+          <div class="box lvl3">Reliance Jio Infocomm Ltd.<div class="pct" style="color:var(--teal-2);">100% held</div></div>
+        </div>
+        <div class="branch">
+          <div class="line"></div>
+          <div class="box lvl2">Independent Media Trust<div class="pct">RIL sole beneficiary</div></div>
+          <div class="line"></div>
+          <div class="box lvl3">Network18 Media &amp; Investments Ltd.</div>
+        </div>
+      </div>
+      <div class="line" style="margin-top:2px;"></div>
+      <div class="box lvl3" style="margin-top:0;">Reliance New Energy Ltd. — 100% held directly by RIL &nbsp;·&nbsp; Reliance International Ltd. — material subsidiary</div>
+    </div>
+
+    <div class="tblwrap" style="margin-top:26px;">
+      <table class="subtable">
+        <thead><tr><th>Company</th><th style="text-align:left;">Role</th><th style="text-align:left;">Ownership / control point</th><th style="text-align:left;">Main business</th></tr></thead>
+        <tbody>
+          <tr><td>Jio Platforms Limited</td><td style="text-align:left;">Intermediate holding company</td><td style="text-align:left;">RIL‑controlled group company; overseas strategic investors also hold interests</td><td style="text-align:left;">Digital services &amp; technology</td></tr>
+          <tr><td>Reliance Jio Infocomm Limited</td><td style="text-align:left;">Operating subsidiary within Jio</td><td style="text-align:left;">100% shareholding, FY 2024‑25</td><td style="text-align:left;">Telecom &amp; connectivity</td></tr>
+          <tr><td>Reliance Retail Ventures Limited</td><td style="text-align:left;">Holding company for retail</td><td style="text-align:left;">RIL‑controlled; 83.56% held; external investors hold the remainder</td><td style="text-align:left;">Retail &amp; consumer</td></tr>
+          <tr><td>Reliance Retail Limited</td><td style="text-align:left;">Operating subsidiary under RRVL</td><td style="text-align:left;">Controlled through the RRVL structure</td><td style="text-align:left;">Stores &amp; digital commerce</td></tr>
+          <tr style="background:#FBF3E3;"><td>7‑India Convenience Retail Limited</td><td style="text-align:left;">Second‑tier operating subsidiary under RRVL</td><td style="text-align:left;">Wholly owned (100%) by RRVL — see Section 04</td><td style="text-align:left;">7‑Eleven convenience stores, master franchise</td></tr>
+          <tr><td>Reliance New Energy Limited</td><td style="text-align:left;">Wholly controlled subsidiary</td><td style="text-align:left;">100% held by RIL (incl. shares held jointly with six shareholders)</td><td style="text-align:left;">New / clean‑energy technologies</td></tr>
+          <tr><td>Network18 Media &amp; Investments Limited</td><td style="text-align:left;">Media subsidiary</td><td style="text-align:left;">Control acquired via Independent Media Trust (RIL sole beneficiary)</td><td style="text-align:left;">Media, news &amp; digital content</td></tr>
+          <tr><td>Reliance International Limited</td><td style="text-align:left;">Material subsidiary</td><td style="text-align:left;">Identified among RIL's material subsidiaries, FY 2024‑25</td><td style="text-align:left;">International energy / trading</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="small-note">Ownership percentage is the starting point, not the only factor — control can also arise from voting rights, appointment rights, or other powers over relevant activities. This is why Jio Platforms and RRVL, despite having outside investors, are still evaluated at the group level rather than by outside‑investor percentage alone.</p>
+  </div>
+</section>
+
+<!-- ============ RIL x 7-INDIA ============ -->
+<section id="seven-india">
+  <div class="container">
+    <div class="sec-head">
+      <span class="eyebrow">04 — RIL × 7‑India Convenience Retail</span>
+      <h2>A real second‑tier subsidiary, with real financial statements</h2>
+      <p>7‑India Convenience Retail Limited is the company that actually runs 7‑Eleven stores in India. It is a <b>wholly owned subsidiary of Reliance Retail Ventures Limited</b> — which is itself 83.56%‑owned by RIL. That makes it a textbook case of a <b>step‑down (second‑tier) subsidiary</b> inside a multi‑level group.</p>
+    </div>
+
+    <div class="twocol">
+      <div>
+        <h3 style="font-size:17px;">How the relationship works</h3>
+        <p>In October 2021, RRVL — through its wholly owned subsidiary 7‑India Convenience Retail Limited — signed a master franchise agreement with 7‑Eleven, Inc. to open and operate 7‑Eleven convenience stores across India, starting in Mumbai. RRVL is, in turn, a subsidiary of RIL and the holding company for all of Reliance's retail businesses.</p>
+        <p>So RIL does not hold shares in 7‑India directly. Its relationship runs <b>RIL → RRVL → 7‑India</b>: control flows down the chain, and on consolidation, 7‑India's assets, liabilities, income and expenses are combined into the group accounts because RIL ultimately controls it, even without a direct shareholding.</p>
+        <h3 style="font-size:17px;margin-top:22px;">Why this matters for consolidation</h3>
+        <p>Because 7‑India is <b>100% owned by RRVL</b>, no Non‑Controlling Interest arises at the 7‑India level itself. But RRVL is only <b>83.56% owned by RIL</b> — so when 7‑India's results are rolled all the way up into <i>RIL's</i> consolidated accounts, an <b>effective (indirect) NCI of 16.44%</b> still applies, simply because it passes through RRVL. This is the "effective ownership" calculation below.</p>
+      </div>
+      <div class="statbox">
+        <div class="stat"><b>2021</b><span>Master franchise signed with 7‑Eleven, Inc.</span></div>
+        <div class="stat"><b>100%</b><span>RRVL's direct shareholding in 7‑India</span></div>
+        <div class="stat"><b>83.56%</b><span>RIL's shareholding in RRVL</span></div>
+        <div class="stat"><b>₹207.99 cr</b><span>7‑India's total equity, 31 Mar 2026</span></div>
+      </div>
+    </div>
+
+    <h3 style="font-size:18px;margin:30px 0 6px;">Effective (indirect) ownership through the chain</h3>
+    <p>Multiplying stake by stake down the chain gives RIL's true economic interest in a second‑tier subsidiary — a core Ind AS 110 skill for group structures with more than one level.</p>
+    <div class="formula">Effective interest <span class="op">=</span> RIL's stake in RRVL <span class="op">×</span> RRVL's stake in 7‑India <span class="op">=</span> 83.56% <span class="op">×</span> 100% <span class="op">=</span> 83.56%</div>
+    <div class="formula">Effective NCI (outside RRVL shareholders) <span class="op">=</span> 100% <span class="op">−</span> 83.56% <span class="op">=</span> 16.44%</div>
+
+    <div class="tblwrap" style="margin:18px 0 6px;">
+      <table style="min-width:0;">
+        <thead><tr><th>Illustrative split of 7‑India's net assets</th><th>₹ crore</th><th>%</th></tr></thead>
+        <tbody>
+          <tr><td>7‑India total equity (net assets), 31 Mar 2026 — from Balance Sheet</td><td class="mono">208.00</td><td>100%</td></tr>
+          <tr><td>Attributable to RIL group (effective interest)</td><td class="mono">173.87</td><td>83.56%</td></tr>
+          <tr><td>Effective Non‑Controlling Interest (via RRVL's outside shareholders)</td><td class="mono">34.19</td><td>16.44%</td></tr>
+          <tr class="neg"><td>7‑India loss for FY 2025‑26 — from Statement of P&amp;L</td><td class="mono">(89.89)</td><td>100%</td></tr>
+          <tr class="neg"><td>Loss attributable to RIL group (effective interest)</td><td class="mono">(75.11)</td><td>83.56%</td></tr>
+          <tr class="neg"><td>Loss attributable to effective NCI</td><td class="mono">(14.78)</td><td>16.44%</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="disclosure">Illustrative, for this project only. 7‑India's statements are prepared in ₹ lakhs; converted here to ₹ crore (÷100) to match RIL's reporting unit. This is a teaching illustration of how a step‑down subsidiary's results pass through an intermediate holding company on consolidation — it is not an official RIL group disclosure, since RIL's published consolidated accounts do not break results out at the 7‑India level.</div>
+
+    <h3 style="font-size:18px;margin:34px 0 14px;">Financial statements used in this section</h3>
+    <div class="tabbar" id="finTabs">
+      <button class="tabbtn active" data-tab="ril-bs">RIL Balance Sheet</button>
+      <button class="tabbtn" data-tab="ril-pl">RIL Profit &amp; Loss</button>
+      <button class="tabbtn" data-tab="ril-cf">RIL Cash Flow</button>
+      <button class="tabbtn" data-tab="si-bs">7‑India Balance Sheet</button>
+      <button class="tabbtn" data-tab="si-pl">7‑India Profit &amp; Loss</button>
+      <button class="tabbtn" data-tab="si-cf">7‑India Cash Flow</button>
+    </div>
+
+    <div class="tabpanel active" id="ril-bs">
+      <p class="small-note">RIL, Standalone Balance Sheet — ₹ crore</p>
+      <div class="tblwrap"><table>
+        <thead><tr><th>Particulars</th><th>31 Mar 2026</th><th>31 Mar 2025</th></tr></thead>
+        <tbody>
+          <tr><td>Property, Plant &amp; Equipment</td><td>2,68,923</td><td>2,67,096</td></tr>
+          <tr><td>Investments (non‑current)</td><td>3,64,073</td><td>3,33,258</td></tr>
+          <tr><td>Capital work‑in‑progress</td><td>1,30,954</td><td>76,322</td></tr>
+          <tr class="total"><td>Total Non‑Current Assets</td><td>8,38,190</td><td>7,52,838</td></tr>
+          <tr class="total"><td>Total Current Assets</td><td>3,27,619</td><td>2,69,563</td></tr>
+          <tr class="total"><td>Total Assets</td><td>11,65,809</td><td>10,22,401</td></tr>
+          <tr><td>Equity Share Capital</td><td>13,532</td><td>13,532</td></tr>
+          <tr><td>Other Equity</td><td>5,52,703</td><td>5,29,555</td></tr>
+          <tr class="total"><td>Total Equity</td><td>5,66,235</td><td>5,43,087</td></tr>
+          <tr class="total"><td>Total Liabilities</td><td>5,99,574</td><td>4,79,314</td></tr>
+          <tr class="total"><td>Total Equity and Liabilities</td><td>11,65,809</td><td>10,22,401</td></tr>
+        </tbody>
+      </table></div>
+    </div>
+
+    <div class="tabpanel" id="ril-pl">
+      <p class="small-note">RIL, Standalone Statement of Profit &amp; Loss — ₹ crore</p>
+      <div class="tblwrap"><table>
+        <thead><tr><th>Particulars</th><th>2025‑26</th><th>2024‑25</th></tr></thead>
+        <tbody>
+          <tr><td>Revenue from Operations</td><td>5,24,105</td><td>5,32,792</td></tr>
+          <tr><td>Other Income</td><td>23,674</td><td>16,094</td></tr>
+          <tr class="total"><td>Total Income</td><td>5,47,779</td><td>5,48,886</td></tr>
+          <tr class="total"><td>Total Expenses</td><td>4,93,703</td><td>5,02,758</td></tr>
+          <tr class="total"><td>Profit Before Tax</td><td>54,076</td><td>46,128</td></tr>
+          <tr class="total"><td>Profit for the Year</td><td>43,851</td><td>35,262</td></tr>
+          <tr><td>Basic &amp; Diluted EPS (₹)</td><td>32.40</td><td>26.06</td></tr>
+        </tbody>
+      </table></div>
+    </div>
+
+    <div class="tabpanel" id="ril-cf">
+      <p class="small-note">RIL, Standalone Cash Flow — ₹ crore. Note the two lines that evidence the RIL → subsidiaries relationship directly on the face of the statement.</p>
+      <div class="tblwrap"><table>
+        <thead><tr><th>Particulars</th><th>2025‑26</th><th>2024‑25</th></tr></thead>
+        <tbody>
+          <tr class="total"><td>Net Cash from Operating Activities</td><td>79,059</td><td>79,392</td></tr>
+          <tr style="background:#FBF3E3;"><td>Investments in Subsidiaries</td><td>(46,580)</td><td>(46,372)</td></tr>
+          <tr style="background:#FBF3E3;"><td>Dividend Income from Subsidiaries, Associates &amp; JVs</td><td>9,453</td><td>1,762</td></tr>
+          <tr class="total"><td>Net Cash used in Investing Activities</td><td>(50,451)</td><td>(28,106)</td></tr>
+          <tr class="total"><td>Net Cash used in Financing Activities</td><td>(2,900)</td><td>(38,063)</td></tr>
+          <tr class="total"><td>Closing Balance of Cash &amp; Equivalents</td><td>1,08,179</td><td>82,471</td></tr>
+        </tbody>
+      </table></div>
+      <p class="small-note">Because these are RIL's <i>standalone</i> accounts, its stake in subsidiaries like RRVL sits on the balance sheet as an "Investment", carried at cost — it is only in the <i>consolidated</i> accounts that RRVL's (and 7‑India's) own assets, liabilities, income and expenses get combined in line by line.</p>
+    </div>
+
+    <div class="tabpanel" id="si-bs">
+      <p class="small-note">7‑India Convenience Retail Limited, Balance Sheet — ₹ lakhs</p>
+      <div class="tblwrap"><table>
+        <thead><tr><th>Particulars</th><th>31 Mar 2026</th><th>31 Mar 2025</th></tr></thead>
+        <tbody>
+          <tr><td>Property, Plant &amp; Equipment</td><td>10,925.59</td><td>10,563.12</td></tr>
+          <tr><td>Intangible Assets</td><td>4,461.71</td><td>4,742.72</td></tr>
+          <tr><td>Capital Work‑in‑Progress</td><td>4,993.85</td><td>5,740.94</td></tr>
+          <tr class="total"><td>Total Non‑Current Assets</td><td>20,400.62</td><td>21,056.91</td></tr>
+          <tr class="total"><td>Total Current Assets</td><td>4,177.58</td><td>3,949.99</td></tr>
+          <tr class="total"><td>Total Assets</td><td>24,578.20</td><td>25,006.90</td></tr>
+          <tr><td>Equity Share Capital</td><td>4,500.00</td><td>4,500.00</td></tr>
+          <tr><td>Other Equity</td><td>16,299.85</td><td>16,945.37</td></tr>
+          <tr class="total"><td>Total Equity</td><td>20,799.85</td><td>21,445.37</td></tr>
+          <tr class="total"><td>Total Liabilities</td><td>3,778.35</td><td>3,561.53</td></tr>
+          <tr class="total"><td>Total Equity and Liabilities</td><td>24,578.20</td><td>25,006.90</td></tr>
+        </tbody>
+      </table></div>
+    </div>
+
+    <div class="tabpanel" id="si-pl">
+      <p class="small-note">7‑India Convenience Retail Limited, Statement of Profit &amp; Loss — ₹ lakhs</p>
+      <div class="tblwrap"><table>
+        <thead><tr><th>Particulars</th><th>2025‑26</th><th>2024‑25</th></tr></thead>
+        <tbody>
+          <tr><td>Revenue from Operations</td><td>9,145.84</td><td>6,363.27</td></tr>
+          <tr class="total"><td>Total Income</td><td>9,193.87</td><td>6,433.38</td></tr>
+          <tr class="total"><td>Total Expenses</td><td>19,018.55</td><td>13,547.25</td></tr>
+          <tr class="neg total"><td>Loss Before Tax</td><td>(9,824.68)</td><td>(7,113.87)</td></tr>
+          <tr class="neg total"><td>Loss for the Year</td><td>(8,989.28)</td><td>(7,294.41)</td></tr>
+          <tr class="neg"><td>Basic &amp; Diluted EPS (₹)</td><td>(19.98)</td><td>(16.21)</td></tr>
+        </tbody>
+      </table></div>
+    </div>
+
+    <div class="tabpanel" id="si-cf">
+      <p class="small-note">7‑India Convenience Retail Limited, Cash Flow — ₹ lakhs</p>
+      <div class="tblwrap"><table>
+        <thead><tr><th>Particulars</th><th>2025‑26</th><th>2024‑25</th></tr></thead>
+        <tbody>
+          <tr class="neg total"><td>Net Cash used in Operating Activities</td><td>(7,197.10)</td><td>(5,195.49)</td></tr>
+          <tr class="neg total"><td>Net Cash used in Investing Activities</td><td>(1,070.46)</td><td>(4,158.37)</td></tr>
+          <tr class="total"><td>Net Cash from Financing Activities (OFCD issue)</td><td>8,350.00</td><td>9,280.00</td></tr>
+          <tr class="total"><td>Net Increase/(Decrease) in Cash</td><td>82.44</td><td>(73.86)</td></tr>
+          <tr class="total"><td>Closing Balance of Cash</td><td>256.26</td><td>173.82</td></tr>
+        </tbody>
+      </table></div>
+      <p class="small-note">7‑India is funding its store roll‑out and losses mainly through Unsecured Zero Coupon Optionally Fully Convertible Debentures (OFCDs) rather than fresh equity — ₹8,350 lakh raised in 2025‑26 alone, taking cumulative OFCDs to ₹38,475 lakh.</p>
+    </div>
+
+    <div class="chart-row" style="margin-top:30px;display:grid;grid-template-columns:1fr 1fr;gap:20px;">
+      <div class="tblwrap" style="padding:18px;"><canvas id="chartSI" height="220"></canvas></div>
+      <div class="tblwrap" style="padding:18px;"><canvas id="chartRIL" height="220"></canvas></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ CONSOLIDATION WORKINGS ============ -->
+<section class="alt" id="consolidation">
+  <div class="container">
+    <div class="sec-head">
+      <span class="eyebrow">05 — Accounting Calculations</span>
+      <h2>Consolidation workings, based on RIL's disclosures</h2>
+      <p>Investment, Non‑Controlling Interest, and goodwill/capital reserve, worked from RIL's FY 2024‑25 consolidated figures and its 83.56% stake in Reliance Retail Ventures Limited.</p>
+    </div>
+
+    <div class="twocol">
+      <div>
+        <h3 style="font-size:17px;">Step 1 — Net assets &amp; ownership</h3>
+        <p>RIL's investment in RRVL and RRVL's net assets used for the illustrative goodwill calculation are both taken at <b>₹92,581.77 cr</b> (RIL's consolidated net‑assets disclosure). Because the public year‑end disclosure does not provide one single acquisition‑date net‑assets figure for RRVL, this is an <i>illustrative</i> model — consideration is set equal to net assets as the base case, so goodwill/capital reserve is nil until a different acquisition cost is substituted.</p>
+        <div class="formula">NCI % <span class="op">=</span> 100% <span class="op">−</span> RIL's ownership % <span class="op">=</span> 100% <span class="op">−</span> 83.56% <span class="op">=</span> 16.44%</div>
+        <div class="formula">Parent's share of net assets <span class="op">=</span> ₹92,581.77 cr <span class="op">×</span> 83.56% <span class="op">=</span> ₹77,357.7 cr</div>
+        <div class="formula">NCI at proportionate share <span class="op">=</span> ₹92,581.77 cr <span class="op">×</span> 16.44% <span class="op">=</span> ₹15,220.4 cr</div>
+        <div class="formula">Goodwill / (Capital reserve) <span class="op">=</span> Cost of Investment <span class="op">−</span> Parent's Share of Net Assets <span class="op">=</span> ₹0 cr <span>(base case: cost = net assets)</span></div>
+      </div>
+      <div class="statbox">
+        <div class="stat"><b>83.56%</b><span>RIL's ownership in RRVL</span></div>
+        <div class="stat"><b>16.44%</b><span>Non‑Controlling Interest %</span></div>
+        <div class="stat"><b>₹92,581.77 cr</b><span>RRVL net assets used</span></div>
+        <div class="stat"><b>₹3,106 cr</b><span>RRVL share of profit to RIL, FY 2024‑25</span></div>
+      </div>
+    </div>
+
+    <h3 style="font-size:17px;margin-top:30px;">Step 2 — RIL's reported consolidated position, FY 2024‑25</h3>
+    <div class="tblwrap"><table style="min-width:0;">
+      <thead><tr><th>Particulars</th><th>₹ crore</th></tr></thead>
+      <tbody>
+        <tr><td>Consolidated Total Assets</td><td>19,50,121</td></tr>
+        <tr><td>Consolidated Total Liabilities</td><td>9,40,495</td></tr>
+        <tr><td>Consolidated Total Equity</td><td>10,09,626</td></tr>
+        <tr style="background:#FBF3E3;"><td>— of which, Non‑Controlling Interest</td><td>1,66,426</td></tr>
+        <tr><td>Profit attributable to owners of the parent</td><td>69,648</td></tr>
+        <tr style="background:#FBF3E3;"><td>Profit attributable to NCI</td><td>11,661</td></tr>
+        <tr><td>Revenue from Operations</td><td>9,80,136</td></tr>
+      </tbody>
+    </table></div>
+
+    <h3 style="font-size:17px;margin-top:30px;">Step 3 — Intra‑group adjustments</h3>
+    <p>On full consolidation, intra‑group balances between RIL and its subsidiaries are eliminated so the group is not shown transacting with itself:</p>
+    <div class="tblwrap"><table style="min-width:0;">
+      <thead><tr><th>Adjustment</th><th style="text-align:left;">Consolidation treatment</th><th style="text-align:left;">Effect</th></tr></thead>
+      <tbody>
+        <tr><td>Intra‑group unrealised profit</td><td style="text-align:left;">Eliminate</td><td style="text-align:left;">Reduces inventory/asset value and consolidated profit by the unrealised amount</td></tr>
+        <tr><td>Intra‑group receivable</td><td style="text-align:left;">Eliminate against payable</td><td style="text-align:left;">Reduces consolidated receivables and payables symmetrically</td></tr>
+        <tr><td>Intra‑group payable</td><td style="text-align:left;">Eliminate against receivable</td><td style="text-align:left;">Reduces consolidated payables and receivables symmetrically</td></tr>
+      </tbody>
+    </table></div>
+    <p class="small-note">No intra‑group balances were disclosed at a project level for this exercise, so these adjustments are shown structurally (the "how", not a specific rupee figure) — inputs a class could substitute if given intercompany schedules.</p>
+  </div>
+</section>
+
+<!-- ============ SIMULATOR ============ -->
+<section id="simulator">
+  <div class="container">
+    <div class="sec-head">
+      <span class="eyebrow">06 — Interactive Analysis</span>
+      <h2>NCI scenario simulator</h2>
+      <p>Move the slider to change the assumed NCI share of RIL's consolidated profit, and watch NCI and profit attributable to owners recalculate instantly — demonstrating the cause‑and‑effect the brief asked for.</p>
+    </div>
+    <div class="sim">
+      <h3>RIL NCI Scenario Simulator</h3>
+      <p style="color:#AEB9CC;font-size:14px;max-width:60ch;">Baseline: RIL's FY 2024‑25 consolidated profit before adjustment for NCI was ₹80,787 cr; actual reported NCI share was ₹11,661 cr (14.43% of pre‑NCI profit), leaving ₹69,648 cr attributable to owners.</p>
+      <div class="sim-grid">
+        <div>
+          <label for="nciSlider">Assumed NCI share of profit</label>
+          <div class="sim-slider-row">
+            <input type="range" id="nciSlider" min="0" max="50" step="0.01" value="14.43">
+            <span class="sim-val" id="nciVal">14.43%</span>
+          </div>
+          <div class="presets">
+            <button class="preset" onclick="setNci(14.43)">Actual · 14.43%</button>
+            <button class="preset" onclick="setNci(10)">10%</button>
+            <button class="preset" onclick="setNci(16.44)">RRVL‑level · 16.44%</button>
+            <button class="preset" onclick="setNci(20)">20%</button>
+            <button class="preset" onclick="setNci(25)">25%</button>
+          </div>
+          <div class="sim-out">
+            <div class="o"><b id="outNci">₹11,655 cr</b><span>Calculated NCI share</span></div>
+            <div class="o"><b id="outOwners">₹69,132 cr</b><span>Calculated profit to owners</span></div>
+            <div class="o"><b id="outDiff">₹(6) cr</b><span>Difference vs. actual reported NCI</span></div>
+            <div class="o"><b>₹80,787 cr</b><span>Group profit before NCI (fixed)</span></div>
+          </div>
+        </div>
+        <div class="chart-holder">
+          <canvas id="chartSim" height="230"></canvas>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ FINDINGS ============ -->
+<section class="alt" id="findings">
+  <div class="container">
+    <div class="sec-head">
+      <span class="eyebrow">Findings</span>
+      <h2>What the study shows</h2>
+    </div>
+    <div class="findgrid">
+      <div class="find"><h4>Control, not ownership %, is the test</h4><p>RIL's group includes intermediate holding companies (Jio Platforms, RRVL) with outside investors — consolidation still applies at the group level because control, not a simple 50% threshold, determines a subsidiary.</p></div>
+      <div class="find"><h4>Multi‑tier structures need effective ownership</h4><p>7‑India is 100% owned by RRVL, yet RIL's effective economic interest in it is only 83.56% once RRVL's own 16.44% outside stake is factored in — a direct, worked example of indirect ownership.</p></div>
+      <div class="find"><h4>Standalone and consolidated tell different stories</h4><p>RIL's standalone FY 2025‑26 profit (₹43,851 cr) is not the same figure as its consolidated FY 2024‑25 profit attributable to owners (₹81,309 cr / ₹69,648 cr per Goutham's workings) — the gap is exactly the results of subsidiaries like RRVL, Jio and 7‑India.</p></div>
+      <div class="find"><h4>NCI is material to the RIL group</h4><p>₹1,66,426 cr of RIL's consolidated equity, and ₹11,661 cr of its FY 2024‑25 profit, belong to non‑controlling shareholders — not a rounding error, but a structurally important slice of the group accounts.</p></div>
+      <div class="find"><h4>A subsidiary can be loss‑making within a profitable group</h4><p>7‑India recorded a loss of ₹89.89 cr in FY 2025‑26 (up from ₹72.94 cr in FY 2024‑25) even as RIL as a whole remained solidly profitable — consolidation absorbs both, line by line.</p></div>
+      <div class="find"><h4>Debt, not equity, is funding 7‑India's growth</h4><p>7‑India's cumulative OFCDs reached ₹38,475 lakh by 31 Mar 2026 against paid‑up equity capital of just ₹4,500 lakh — a financing pattern that will matter when RRVL's own consolidated accounts are analysed.</p></div>
+    </div>
+
+    <h3 style="font-size:20px;margin-top:44px;margin-bottom:12px;">Conclusion</h3>
+    <p style="max-width:80ch;">Reliance Industries Limited is a useful case for corporate accounting precisely because it is not a simple parent‑and‑one‑subsidiary structure. Control cascades through intermediate holding companies — most visibly Reliance Retail Ventures Limited — down to operating businesses such as 7‑India Convenience Retail Limited, the entity that actually runs 7‑Eleven stores in India. Applying Ind AS 110's control test, calculating Non‑Controlling Interest at both the RRVL level (16.44%) and effectively at the 7‑India level (also 16.44%, passed through), and comparing RIL's standalone accounts against its consolidated ones together show why "control → subsidiary → consolidation" is the operating principle of group accounting, not share ownership alone.</p>
+  </div>
+</section>
+
+<!-- ============ TEAM & REFERENCES ============ -->
+<section id="team">
+  <div class="container">
+    <div class="sec-head">
+      <span class="eyebrow">Team &amp; References</span>
+      <h2>Group 06</h2>
+      <p>Six roles, one consolidated project.</p>
+    </div>
+    <div class="teamgrid">
+      <div class="person"><div class="initials">S</div><h4>Sudarshana</h4><p>Accounting Concepts — holding/subsidiary definitions, control, ownership, Ind AS 110.</p></div>
+      <div class="person"><div class="initials">D</div><h4>Dhanush T</h4><p>Company Research — RIL background, holding company &amp; major subsidiaries.</p></div>
+      <div class="person"><div class="initials">R</div><h4>Roohani</h4><p>Financial Data — ownership %, revenue, profit, assets, liabilities, subsidiary disclosures.</p></div>
+      <div class="person"><div class="initials">G</div><h4>Goutham Krishna P</h4><p>Accounting Calculations — investment, NCI, goodwill/capital reserve, intra‑group adjustments.</p></div>
+      <div class="person"><div class="initials">K</div><h4>Keshav Choudhary</h4><p>Interactive Analysis — Google Sheet scenario model behind the live NCI simulator.</p></div>
+      <div class="person"><div class="initials">J</div><h4>Jiya KJ</h4><p>Presentation &amp; Design — this site: layout, navigation, RIL × 7‑India relationship, and final integration.</p></div>
+    </div>
+
+    <h3 style="font-size:18px;margin-top:38px;margin-bottom:6px;">References</h3>
+    <ul class="refs">
+      <li><b>Reliance Industries Limited</b>, Integrated Annual Report 2024‑25 — Board's Report and Consolidated Financial Statements.</li>
+      <li><b>Reliance Industries Limited</b>, Financial Statements of Subsidiaries, FY 2024‑25.</li>
+      <li><b>Reliance Industries Limited</b>, Major Subsidiaries &amp; Associates disclosures.</li>
+      <li><b>Reliance Industries Limited</b>, Standalone Financial Statements, FY 2025‑26 (Balance Sheet, Statement of Profit &amp; Loss, Cash Flow, Statement of Changes in Equity).</li>
+      <li><b>7‑India Convenience Retail Limited</b>, Financial Statements for the year ended 31 March 2026.</li>
+      <li><b>Reliance Retail Ventures Limited / 7‑Eleven, Inc.</b> — master franchise agreement announcement, October 2021.</li>
+      <li><b>Ministry of Corporate Affairs (MCA)</b> — Ind AS 110, Consolidated Financial Statements.</li>
+      <li><b>Institute of Chartered Accountants of India (ICAI)</b> — Educational Material on Ind AS 110.</li>
+    </ul>
+  </div>
+</section>
+
+<button id="totop" onclick="window.scrollTo({top:0,behavior:'smooth'})" aria-label="Back to top">↑</button>
+
+<footer>
+  <div class="container fgrid">
+    <div>
+      <h5>RIL Group Structure Project</h5>
+      <p style="color:#93A0B5;font-size:13.5px;max-width:40ch;">A Corporate Accounting group project on Reliance Industries Limited, its subsidiaries, and consolidation under Ind AS 110. Built for academic use.</p>
+    </div>
+    <div>
+      <h5>Sections</h5>
+      <a href="#overview">Company Overview</a>
+      <a href="#concepts">Accounting Concepts</a>
+      <a href="#structure">Group Structure</a>
+      <a href="#seven-india">RIL × 7‑India</a>
+    </div>
+    <div>
+      <h5>More</h5>
+      <a href="#consolidation">Consolidation Workings</a>
+      <a href="#simulator">NCI Simulator</a>
+      <a href="#findings">Findings &amp; Conclusion</a>
+      <a href="#team">Team &amp; References</a>
+    </div>
+  </div>
+  <div class="container bottom">
+    <span>Group 06 — Corporate Accounting, COFI201‑3</span>
+    <span>Figures as disclosed in cited sources; illustrative workings are marked accordingly.</span>
+  </div>
+</footer>
+
+<script>
+// mobile nav
+const navtoggle=document.getElementById('navtoggle');
+const navlinks=document.getElementById('navlinks');
+navtoggle.addEventListener('click',()=>navlinks.classList.toggle('open'));
+function closeNav(){navlinks.classList.remove('open');}
+
+// back to top
+window.addEventListener('scroll',()=>{
+  document.getElementById('totop').classList.toggle('show',window.scrollY>500);
+});
+
+// accordion
+document.querySelectorAll('.acc-item').forEach(item=>{
+  const head=item.querySelector('.acc-head');
+  const body=item.querySelector('.acc-body');
+  head.addEventListener('click',()=>{
+    const isOpen=item.classList.contains('open');
+    document.querySelectorAll('.acc-item').forEach(i=>{i.classList.remove('open');i.querySelector('.acc-body').style.maxHeight=null;});
+    if(!isOpen){item.classList.add('open');body.style.maxHeight=body.scrollHeight+'px';}
+  });
+});
+// open first accordion item by default
+(function(){const first=document.querySelector('.acc-item');if(first){first.classList.add('open');first.querySelector('.acc-body').style.maxHeight=first.querySelector('.acc-body').scrollHeight+'px';}})();
+
+// financial statement tabs
+document.querySelectorAll('#finTabs .tabbtn').forEach(btn=>{
+  btn.addEventListener('click',()=>{
+    document.querySelectorAll('#finTabs .tabbtn').forEach(b=>b.classList.remove('active'));
+    document.querySelectorAll('.tabpanel').forEach(p=>p.classList.remove('active'));
+    btn.classList.add('active');
+    document.getElementById(btn.dataset.tab).classList.add('active');
+  });
+});
+
+// ---- charts ----
+const goldC='#C99A52', tealC='#3F7A6B', roseC='#B9564C', navyC='#2A3E58';
+function baseOpts(title){
+  return {responsive:true,maintainAspectRatio:true,
+    plugins:{legend:{labels:{color:'#4A5468',font:{family:'Inter',size:11}}},title:{display:!!title,text:title,color:'#1A2231',font:{family:'Fraunces',size:14,weight:'600'}}},
+    scales:{x:{ticks:{color:'#5C6472',font:{size:10.5}},grid:{display:false}},y:{ticks:{color:'#5C6472',font:{size:10.5}},grid:{color:'#EDE9DC'}}}
+  };
+}
+
+new Chart(document.getElementById('chartSI'),{
+  type:'bar',
+  data:{labels:['FY 2024‑25','FY 2025‑26'],
+    datasets:[
+      {label:'Revenue from Operations (₹ lakh)',data:[6363.27,9145.84],backgroundColor:tealC,borderRadius:4},
+      {label:'Loss for the Year (₹ lakh)',data:[7294.41,8989.28],backgroundColor:roseC,borderRadius:4}
+    ]},
+  options:baseOpts('7‑India Convenience Retail — revenue vs. loss')
+});
+
+new Chart(document.getElementById('chartRIL'),{
+  type:'bar',
+  data:{labels:['FY 2024‑25','FY 2025‑26'],
+    datasets:[
+      {label:'Total Assets (₹ cr)',data:[1022401,1165809],backgroundColor:navyC,borderRadius:4},
+      {label:'Profit for the Year (₹ cr)',data:[35262,43851],backgroundColor:goldC,borderRadius:4}
+    ]},
+  options:{...baseOpts('RIL standalone — assets vs. profit'),scales:{...baseOpts().scales,y:{...baseOpts().scales.y,type:'logarithmic'}}}
+});
+
+let simChart=new Chart(document.getElementById('chartSim'),{
+  type:'doughnut',
+  data:{labels:['Profit to owners','NCI share'],
+    datasets:[{data:[69132,11655],backgroundColor:[goldC,tealC],borderColor:'#0E1D30',borderWidth:3}]},
+  options:{responsive:true,maintainAspectRatio:true,
+    plugins:{legend:{position:'bottom',labels:{color:'#EFE9DA',font:{family:'Inter',size:12}}},
+      title:{display:true,text:'₹80,787 cr split by NCI assumption',color:'#F4EFE2',font:{family:'Fraunces',size:13.5}}}}
+});
+
+const slider=document.getElementById('nciSlider');
+const groupProfit=80787, actualNci=11661, actualOwners=69648;
+function updateSim(pct){
+  const nci=groupProfit*pct/100;
+  const owners=groupProfit-nci;
+  document.getElementById('nciVal').textContent=pct.toFixed(2)+'%';
+  document.getElementById('outNci').textContent='₹'+Math.round(nci).toLocaleString('en-IN')+' cr';
+  document.getElementById('outOwners').textContent='₹'+Math.round(owners).toLocaleString('en-IN')+' cr';
+  const diff=Math.round(nci-actualNci);
+  document.getElementById('outDiff').textContent='₹'+(diff>=0?'':'(')+Math.abs(diff).toLocaleString('en-IN')+(diff<0?')':'')+' cr';
+  simChart.data.datasets[0].data=[Math.round(owners),Math.round(nci)];
+  simChart.update();
+}
+slider.addEventListener('input',e=>updateSim(parseFloat(e.target.value)));
+function setNci(pct){slider.value=pct;updateSim(pct);}
+updateSim(14.43);
+</script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.0/chart.umd.min.js"></script>
+
+<script>
+// mobile nav
+const navtoggle=document.getElementById('navtoggle');
+const navlinks=document.getElementById('navlinks');
+navtoggle.addEventListener('click',()=>navlinks.classList.toggle('open'));
+function closeNav(){navlinks.classList.remove('open');}
+
+// back to top
+window.addEventListener('scroll',()=>{
+  document.getElementById('totop').classList.toggle('show',window.scrollY>500);
+});
+
+// accordion
+document.querySelectorAll('.acc-item').forEach(item=>{
+  const head=item.querySelector('.acc-head');
+  const body=item.querySelector('.acc-body');
+  head.addEventListener('click',()=>{
+    const isOpen=item.classList.contains('open');
+    document.querySelectorAll('.acc-item').forEach(i=>{i.classList.remove('open');i.querySelector('.acc-body').style.maxHeight=null;});
+    if(!isOpen){item.classList.add('open');body.style.maxHeight=body.scrollHeight+'px';}
+  });
+});
+// open first accordion item by default
+(function(){const first=document.querySelector('.acc-item');if(first){first.classList.add('open');first.querySelector('.acc-body').style.maxHeight=first.querySelector('.acc-body').scrollHeight+'px';}})();
+
+// financial statement tabs
+document.querySelectorAll('#finTabs .tabbtn').forEach(btn=>{
+  btn.addEventListener('click',()=>{
+    document.querySelectorAll('#finTabs .tabbtn').forEach(b=>b.classList.remove('active'));
+    document.querySelectorAll('.tabpanel').forEach(p=>p.classList.remove('active'));
+    btn.classList.add('active');
+    document.getElementById(btn.dataset.tab).classList.add('active');
+  });
+});
+
+// ---- charts ----
+const goldC='#C99A52', tealC='#3F7A6B', roseC='#B9564C', navyC='#2A3E58';
+function baseOpts(title){
+  return {responsive:true,maintainAspectRatio:true,
+    plugins:{legend:{labels:{color:'#4A5468',font:{family:'Inter',size:11}}},title:{display:!!title,text:title,color:'#1A2231',font:{family:'Fraunces',size:14,weight:'600'}}},
+    scales:{x:{ticks:{color:'#5C6472',font:{size:10.5}},grid:{display:false}},y:{ticks:{color:'#5C6472',font:{size:10.5}},grid:{color:'#EDE9DC'}}}
+  };
+}
+
+new Chart(document.getElementById('chartSI'),{
+  type:'bar',
+  data:{labels:['FY 2024‑25','FY 2025‑26'],
+    datasets:[
+      {label:'Revenue from Operations (₹ lakh)',data:[6363.27,9145.84],backgroundColor:tealC,borderRadius:4},
+      {label:'Loss for the Year (₹ lakh)',data:[7294.41,8989.28],backgroundColor:roseC,borderRadius:4}
+    ]},
+  options:baseOpts('7‑India Convenience Retail — revenue vs. loss')
+});
+
+new Chart(document.getElementById('chartRIL'),{
+  type:'bar',
+  data:{labels:['FY 2024‑25','FY 2025‑26'],
+    datasets:[
+      {label:'Total Assets (₹ cr)',data:[1022401,1165809],backgroundColor:navyC,borderRadius:4},
+      {label:'Profit for the Year (₹ cr)',data:[35262,43851],backgroundColor:goldC,borderRadius:4}
+    ]},
+  options:{...baseOpts('RIL standalone — assets vs. profit'),scales:{...baseOpts().scales,y:{...baseOpts().scales.y,type:'logarithmic'}}}
+});
+
+let simChart=new Chart(document.getElementById('chartSim'),{
+  type:'doughnut',
+  data:{labels:['Profit to owners','NCI share'],
+    datasets:[{data:[69132,11655],backgroundColor:[goldC,tealC],borderColor:'#0E1D30',borderWidth:3}]},
+  options:{responsive:true,maintainAspectRatio:true,
+    plugins:{legend:{position:'bottom',labels:{color:'#EFE9DA',font:{family:'Inter',size:12}}},
+      title:{display:true,text:'₹80,787 cr split by NCI assumption',color:'#F4EFE2',font:{family:'Fraunces',size:13.5}}}}
+});
+
+const slider=document.getElementById('nciSlider');
+const groupProfit=80787, actualNci=11661, actualOwners=69648;
+function updateSim(pct){
+  const nci=groupProfit*pct/100;
+  const owners=groupProfit-nci;
+  document.getElementById('nciVal').textContent=pct.toFixed(2)+'%';
+  document.getElementById('outNci').textContent='₹'+Math.round(nci).toLocaleString('en-IN')+' cr';
+  document.getElementById('outOwners').textContent='₹'+Math.round(owners).toLocaleString('en-IN')+' cr';
+  const diff=Math.round(nci-actualNci);
+  document.getElementById('outDiff').textContent='₹'+(diff>=0?'':'(')+Math.abs(diff).toLocaleString('en-IN')+(diff<0?')':'')+' cr';
+  simChart.data.datasets[0].data=[Math.round(owners),Math.round(nci)];
+  simChart.update();
+}
+slider.addEventListener('input',e=>updateSim(parseFloat(e.target.value)));
+function setNci(pct){slider.value=pct;updateSim(pct);}
+updateSim(14.43);
+</script>
