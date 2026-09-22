@@ -1,6 +1,15 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Reliance Industries — Holding, Subsidiary & Consolidation Study</title>
+<meta name="description" content="Corporate Accounting group project: Reliance Industries Limited, its subsidiary structure, and consolidation accounting illustrated through Reliance Retail Ventures and 7-India Convenience Retail Limited.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,500&family=Inter:wght@400;500;600;700;800&family=IBM+Plex+Mono:wght@500&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.0/chart.umd.min.js"></script>
 <style>
-@import url("https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,500&family=Inter:wght@400;500;600;700;800&family=IBM+Plex+Mono:wght@500&display=swap");
-
 :root{
   --navy:#0E1D30;
   --navy-2:#152A44;
@@ -228,6 +237,8 @@ footer .bottom{border-top:1px solid rgba(255,255,255,.1);margin-top:30px;padding
   --paper:#12161D;--card:#181D26;--ink:#E7E7E3;--muted:#9AA3AF;--line:#2A2F3A;--navy:#0E1D30;
 }
 </style>
+</head>
+<body>
 
 <nav id="topnav">
   <div class="navwrap">
@@ -892,96 +903,5 @@ slider.addEventListener('input',e=>updateSim(parseFloat(e.target.value)));
 function setNci(pct){slider.value=pct;updateSim(pct);}
 updateSim(14.43);
 </script>
-
-<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.0/chart.umd.min.js"></script>
-
-<script>
-// mobile nav
-const navtoggle=document.getElementById('navtoggle');
-const navlinks=document.getElementById('navlinks');
-navtoggle.addEventListener('click',()=>navlinks.classList.toggle('open'));
-function closeNav(){navlinks.classList.remove('open');}
-
-// back to top
-window.addEventListener('scroll',()=>{
-  document.getElementById('totop').classList.toggle('show',window.scrollY>500);
-});
-
-// accordion
-document.querySelectorAll('.acc-item').forEach(item=>{
-  const head=item.querySelector('.acc-head');
-  const body=item.querySelector('.acc-body');
-  head.addEventListener('click',()=>{
-    const isOpen=item.classList.contains('open');
-    document.querySelectorAll('.acc-item').forEach(i=>{i.classList.remove('open');i.querySelector('.acc-body').style.maxHeight=null;});
-    if(!isOpen){item.classList.add('open');body.style.maxHeight=body.scrollHeight+'px';}
-  });
-});
-// open first accordion item by default
-(function(){const first=document.querySelector('.acc-item');if(first){first.classList.add('open');first.querySelector('.acc-body').style.maxHeight=first.querySelector('.acc-body').scrollHeight+'px';}})();
-
-// financial statement tabs
-document.querySelectorAll('#finTabs .tabbtn').forEach(btn=>{
-  btn.addEventListener('click',()=>{
-    document.querySelectorAll('#finTabs .tabbtn').forEach(b=>b.classList.remove('active'));
-    document.querySelectorAll('.tabpanel').forEach(p=>p.classList.remove('active'));
-    btn.classList.add('active');
-    document.getElementById(btn.dataset.tab).classList.add('active');
-  });
-});
-
-// ---- charts ----
-const goldC='#C99A52', tealC='#3F7A6B', roseC='#B9564C', navyC='#2A3E58';
-function baseOpts(title){
-  return {responsive:true,maintainAspectRatio:true,
-    plugins:{legend:{labels:{color:'#4A5468',font:{family:'Inter',size:11}}},title:{display:!!title,text:title,color:'#1A2231',font:{family:'Fraunces',size:14,weight:'600'}}},
-    scales:{x:{ticks:{color:'#5C6472',font:{size:10.5}},grid:{display:false}},y:{ticks:{color:'#5C6472',font:{size:10.5}},grid:{color:'#EDE9DC'}}}
-  };
-}
-
-new Chart(document.getElementById('chartSI'),{
-  type:'bar',
-  data:{labels:['FY 2024‑25','FY 2025‑26'],
-    datasets:[
-      {label:'Revenue from Operations (₹ lakh)',data:[6363.27,9145.84],backgroundColor:tealC,borderRadius:4},
-      {label:'Loss for the Year (₹ lakh)',data:[7294.41,8989.28],backgroundColor:roseC,borderRadius:4}
-    ]},
-  options:baseOpts('7‑India Convenience Retail — revenue vs. loss')
-});
-
-new Chart(document.getElementById('chartRIL'),{
-  type:'bar',
-  data:{labels:['FY 2024‑25','FY 2025‑26'],
-    datasets:[
-      {label:'Total Assets (₹ cr)',data:[1022401,1165809],backgroundColor:navyC,borderRadius:4},
-      {label:'Profit for the Year (₹ cr)',data:[35262,43851],backgroundColor:goldC,borderRadius:4}
-    ]},
-  options:{...baseOpts('RIL standalone — assets vs. profit'),scales:{...baseOpts().scales,y:{...baseOpts().scales.y,type:'logarithmic'}}}
-});
-
-let simChart=new Chart(document.getElementById('chartSim'),{
-  type:'doughnut',
-  data:{labels:['Profit to owners','NCI share'],
-    datasets:[{data:[69132,11655],backgroundColor:[goldC,tealC],borderColor:'#0E1D30',borderWidth:3}]},
-  options:{responsive:true,maintainAspectRatio:true,
-    plugins:{legend:{position:'bottom',labels:{color:'#EFE9DA',font:{family:'Inter',size:12}}},
-      title:{display:true,text:'₹80,787 cr split by NCI assumption',color:'#F4EFE2',font:{family:'Fraunces',size:13.5}}}}
-});
-
-const slider=document.getElementById('nciSlider');
-const groupProfit=80787, actualNci=11661, actualOwners=69648;
-function updateSim(pct){
-  const nci=groupProfit*pct/100;
-  const owners=groupProfit-nci;
-  document.getElementById('nciVal').textContent=pct.toFixed(2)+'%';
-  document.getElementById('outNci').textContent='₹'+Math.round(nci).toLocaleString('en-IN')+' cr';
-  document.getElementById('outOwners').textContent='₹'+Math.round(owners).toLocaleString('en-IN')+' cr';
-  const diff=Math.round(nci-actualNci);
-  document.getElementById('outDiff').textContent='₹'+(diff>=0?'':'(')+Math.abs(diff).toLocaleString('en-IN')+(diff<0?')':'')+' cr';
-  simChart.data.datasets[0].data=[Math.round(owners),Math.round(nci)];
-  simChart.update();
-}
-slider.addEventListener('input',e=>updateSim(parseFloat(e.target.value)));
-function setNci(pct){slider.value=pct;updateSim(pct);}
-updateSim(14.43);
-</script>
+</body>
+</html>
